@@ -26,6 +26,7 @@ class graph(object):
 
 def BronKerboschNoPivot(clique, candidates, excluded, graph):
 	if not candidates and not excluded:
+		print clique
 		return clique
 	for v in list(candidates):
 		n = graph.getNeighbors(v)
@@ -46,7 +47,7 @@ if __name__ == '__main__':
 		numbers = line[0:len(line)-1].split(" ")
 		connections.append(tuple(numbers[:2]))
 	graph = graph(connections)
-	print(BronKerboschNoPivot(set(), graph.allNodes(), set(), graph))
+	BronKerboschNoPivot(set(), graph.allNodes(), set(), graph)
 
 
 
