@@ -1,24 +1,5 @@
 from collections import defaultdict
 
-class node(object):
-	def __init__(self, neighbors):
-		if neighbors:
-			self.__neighbors = neighbors
-		else:
-			self.__neighbors = set()
-
-	def addNeighbor(neighbor):
-		self.__neighbors.add(neighbor)
-
-	def removeNeighbor(neighbor):
-		self.__neighbors.remove(neighbor)
-
-	def numNeighbors():
-		return len(self.__neighbors)
-
-	def getNeighbors():
-		return self.__neighbors
-
 class graph(object):
 	def __init__(self, connections, directed=False):
 		self._graph = defaultdict(set)
@@ -46,11 +27,12 @@ class graph(object):
 def BronKerboschNoPivot(R, P, X, graph):
 	if not P and not X:
 		return R
-	for v in P:
+	for v in P.copy():
+		print R,P,X
 		n = graph.getNeighbors(v)
-		BronKerboschNoPivot(R.copy().union({v}), P.intersection(n), X.intersection(n), graph)
-		P = P.remove(v)
-		X = X.add(v)
+		BronKerboschNoPivot(R | {v}, P & n, X & n, graph)
+		P.remove(v)
+		X.add(v)
 
 if __name__ == '__main__':
 	f = open('graph.txt','r')
@@ -75,7 +57,24 @@ if __name__ == '__main__':
 
 
 
+class node(object):
+	def __init__(self, neighbors):
+		if neighbors:
+			self.__neighbors = neighbors
+		else:
+			self.__neighbors = set()
 
+	def addNeighbor(neighbor):
+		self.__neighbors.add(neighbor)
+
+	def removeNeighbor(neighbor):
+		self.__neighbors.remove(neighbor)
+
+	def numNeighbors():
+		return len(self.__neighbors)
+
+	def getNeighbors():
+		return self.__neighbors
 
 
 
