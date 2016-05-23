@@ -24,15 +24,18 @@ class graph(object):
 		return self._graph[node]
 
 
-def BronKerboschNoPivot(R, P, X, graph):
-	if not P and not X:
-		return R
-	for v in P.copy():
-		print R,P,X
+def BronKerboschNoPivot(clique, candidates, excluded, graph):
+	if not candidates and not excluded:
+		return clique
+	for v in list(candidates):
 		n = graph.getNeighbors(v)
-		BronKerboschNoPivot(R | {v}, P & n, X & n, graph)
-		P.remove(v)
-		X.add(v)
+		# newClique = clique | {v}
+		# newCandidates = candidates & n
+		# newExcluded = excluded & n
+		# BronKerboschNoPivot(newClique, newCandidates, newExcluded, graph)
+		BronKerboschNoPivot(clique | {v}, candidates & n, excluded & n, graph)
+		candidates.remove(v)
+		excluded.add(v)
 
 if __name__ == '__main__':
 	f = open('graph.txt','r')
